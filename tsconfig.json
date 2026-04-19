@@ -4,7 +4,11 @@
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
+
     "strict": true,
+    "noImplicitAny": true, // 🔥 CLAVE
+    "strictNullChecks": true, // 🔥 recomendado
+
     "noEmit": true,
     "esModuleInterop": true,
     "module": "esnext",
@@ -13,6 +17,7 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
+
     "plugins": [
       {
         "name": "next"
