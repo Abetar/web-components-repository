@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -15,7 +16,10 @@ export async function GET() {
       take: 10,
     });
 
-    const snippetIds = data.map((item) => item.snippetId);
+    // 🔥 TIPADO EXPLÍCITO (FIX)
+    const snippetIds = data.map(
+      (item: { snippetId: string }) => item.snippetId
+    );
 
     const snippets = await prisma.snippet.findMany({
       where: {
@@ -25,24 +29,14 @@ export async function GET() {
       },
     });
 
-    // unir métricas + snippet
-    const result = data.map((metric) => {
-      const snippet = snippets.find(
-        (s) => s.id === metric.snippetId
-      );
-
-      return {
-        id: metric.snippetId,
-        name: snippet?.name,
-        copies: metric._sum.copyCount || 0,
-      };
+    return NextResponse.json({
+      ok: true,
+      data: snippets,
     });
-
-    return Response.json(result);
   } catch (error) {
     console.error("TOP METRICS ERROR:", error);
 
-    return Response.json(
+    return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }
     );
