@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum SnippetStatus {
+  DRAFT
+  PUBLISHED
+  ARCHIVED
+}
+
+/// 🔥 NUEVO ENUM (clave para tu sistema de preview)
+enum PreviewType {
+  COMPONENT
+  SECTION
+  FULLWIDTH
+}
+
+model User {
+  id        String   @id @default(cuid())
+  email     String   @unique
+  name      String?
+  password  String?
+  role      String   @default("ADMIN")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Snippet {
+  id          String         @id @default(cuid())
+  name        String
+  slug        String         @unique
+  description String
+  code        String         // TSX / HTML principal
+  previewCode String?        // opcional
+
+  status      SnippetStatus  @default(DRAFT)
+  previewType PreviewType    @default(COMPONENT) // 🔥 CLAVE
+
+  isFeatured  Boolean        @default(false)
+
+  createdAt   DateTime       @default(now())
+  updatedAt   DateTime       @updatedAt
+
+  categories  Category[]
+  tags        Tag[]
+
+  metrics     SnippetMetricDaily[]
+}
+
+model Category {
+  id          String    @id @default(cuid())
+  name        String
+  slug        String    @unique
+  description String?
+
+  snippets    Snippet[]
+}
+
+model Tag {
+  id        String   @id @default(cuid())
+  name      String
+  slug      String   @unique
+
+  snippets  Snippet[]
+}
+
+model SnippetMetricDaily {
+  id          String   @id @default(cuid())
+  snippetId   String
+  date        DateTime
+
+  viewsCount  Int      @default(0)
+  copyCount   Int      @default(0)
+
+  snippet     Snippet  @relation(fields: [snippetId], references: [id])
+
+  @@unique([snippetId, date])
+  @@index([date])
+}
