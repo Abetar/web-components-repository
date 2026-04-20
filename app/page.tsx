@@ -37,7 +37,6 @@ export default function HomePage() {
   const fetchCategories = async () => {
     const res = await fetch("/api/categories");
     const data = await res.json();
-
     setCategories(data);
   };
 
@@ -87,26 +86,26 @@ export default function HomePage() {
         ))}
       </div>
 
-      {/* 📦 LISTA */}
+      {/* 📦 GRID DE CARDS */}
       {snippets.length === 0 ? (
         <p className="text-gray-400">No hay snippets</p>
       ) : (
-        <div className="grid gap-6">
+        <div className="grid md:grid-cols-2 gap-6">
           {snippets.map((snippet) => (
             <div
               key={snippet.id}
-              className="bg-[#1e293b] border border-[#334155] rounded-xl overflow-hidden"
+              className="bg-[#1e293b] border border-[#334155] rounded-xl overflow-hidden flex flex-col"
             >
               {/* HEADER */}
               <Link href={`/snippets/${snippet.slug}`}>
-                <div className="p-5 border-b border-[#334155] cursor-pointer hover:bg-[#263449] transition">
-                  <h2 className="text-lg font-medium">{snippet.name}</h2>
+                <div className="p-4 border-b border-[#334155] cursor-pointer hover:bg-[#263449] transition">
+                  <h2 className="text-md font-medium">{snippet.name}</h2>
 
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-xs text-gray-400 mt-1 line-clamp-2">
                     {snippet.description}
                   </p>
 
-                  <div className="flex gap-2 mt-2">
+                  <div className="flex gap-2 mt-2 flex-wrap">
                     {snippet.categories.map((cat: any) => (
                       <span
                         key={cat.id}
@@ -119,35 +118,23 @@ export default function HomePage() {
                 </div>
               </Link>
 
-              {/* 🔥 RENDER INTELIGENTE */}
-              {snippet.previewType === "fullwidth" ? (
-                <>
-                  {/* FULLWIDTH ocupa todo */}
-                  <SnippetPreview code={snippet.code} previewType="fullwidth" />
+              {/* PREVIEW */}
+              <div className="p-4 bg-[#0f172a] flex justify-center">
+                <SnippetPreview
+                  code={snippet.code}
+                  previewType={snippet.previewType}
+                />
+              </div>
 
-                  <div className="p-5 bg-black text-green-400 text-sm overflow-x-auto">
-                    <pre>{snippet.code}</pre>
-                  </div>
-                </>
-              ) : (
-                <div className="grid md:grid-cols-2">
-                  {/* PREVIEW */}
-                  <div className="p-5 border-r border-[#334155] bg-[#0f172a] flex items-center justify-center">
-                    <SnippetPreview
-                      code={snippet.code}
-                      previewType={snippet.previewType}
-                    />
-                  </div>
-
-                  {/* CODE */}
-                  <div className="p-5 bg-black text-green-400 text-sm overflow-x-auto">
-                    <pre>{snippet.code}</pre>
-                  </div>
-                </div>
-              )}
+              {/* 🔥 CODE PREVIEW (RECORTADO) */}
+              <div className="px-4 pb-4">
+                <pre className="text-xs text-green-400 bg-black p-3 rounded overflow-hidden max-h-32">
+                  {snippet.code.slice(0, 300)}...
+                </pre>
+              </div>
 
               {/* ACTIONS */}
-              <div className="p-4 border-t border-[#334155] flex justify-end">
+              <div className="p-4 border-t border-[#334155] flex justify-end mt-auto">
                 <CopyButton code={snippet.code} snippetId={snippet.id} />
               </div>
             </div>
