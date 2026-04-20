@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import CopyButton from "@/components/copy-button";
 import Link from "next/link";
-import SnippetPreview from "@/components/snippet-preview";
+import SnippetPreviewCompact from "@/components/snippet-preview-compact";
 
 export default function HomePage() {
   const [snippets, setSnippets] = useState<any[]>([]);
@@ -120,10 +120,10 @@ export default function HomePage() {
 
               {/* PREVIEW */}
               <div className="p-4 bg-[#0f172a] flex justify-center">
-                <SnippetPreview
-                  code={snippet.code}
-                  previewType={snippet.previewType}
-                />
+                <SnippetPreviewCompact
+  code={snippet.code}
+  previewType={snippet.previewType}
+/>
               </div>
 
               {/* 🔥 CODE PREVIEW (RECORTADO) */}
