@@ -4,7 +4,7 @@ import SnippetPreviewCompact from "@/components/snippet-preview-compact";
 import { FiTrendingUp } from "react-icons/fi";
 
 async function getData() {
-  const res = await fetch("http://localhost:3000/api/metrics/top", {
+  const res = await fetch("https://web-components-repository.vercel.app/api/metrics/top", {
     cache: "no-store",
   });
 
