@@ -1,9 +1,10 @@
 import { prisma } from "@/lib/prisma";
 import { NextResponse } from "next/server";
+import { Prisma } from "@prisma/client";
 
 export async function GET() {
   try {
-    const data = await prisma.snippetMetricDaily.groupBy({
+    const metrics = await prisma.snippetMetricDaily.groupBy({
       by: ["snippetId"],
       _sum: {
         copyCount: true,
@@ -16,9 +17,8 @@ export async function GET() {
       take: 10,
     });
 
-    // 🔥 TIPADO EXPLÍCITO (FIX)
-    const snippetIds = data.map(
-      (item: { snippetId: string }) => item.snippetId
+    const snippetIds = metrics.map(
+      (item: { snippetId: string }) => item.snippetId,
     );
 
     const snippets = await prisma.snippet.findMany({
@@ -29,16 +29,26 @@ export async function GET() {
       },
     });
 
+    // 🔥 MAP TIPADO CORRECTAMENTE
+    const result = metrics.map((metric) => {
+      const snippet = snippets.find((s) => s.id === metric.snippetId);
+
+      return {
+        ...snippet,
+        copies: metric._sum.copyCount ?? 0,
+      };
+    });
+
     return NextResponse.json({
       ok: true,
-      data: snippets,
+      data: result,
     });
   } catch (error) {
     console.error("TOP METRICS ERROR:", error);
 
     return NextResponse.json(
       { error: "Internal server error" },
-      { status: 500 }
+      { status: 500 },
     );
   }
 }
