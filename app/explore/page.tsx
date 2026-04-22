@@ -48,27 +48,44 @@ export default function HomePage() {
   return (
     <main className="min-h-screen bg-[#0f172a] text-white p-10">
       {/* NAVBAR */}
-      <div className="max-w-6xl mx-auto mb-10 flex justify-between items-center">
-        <Link
-          href="/"
-          className="text-sm text-gray-400 hover:text-white transition"
-        >
-          ← Home
-        </Link>
+     <div className="max-w-6xl mx-auto mb-10 flex justify-between items-center">
+  
+  {/* LEFT */}
+  <Link
+    href="/"
+    className="text-sm text-gray-400 hover:text-white transition"
+  >
+    ← Home
+  </Link>
 
-        <div className="flex gap-4 text-sm">
-          <Link href="/explore" className="text-white font-medium">
-            Explore
-          </Link>
+  {/* RIGHT */}
+  <div className="flex items-center gap-3 text-sm">
+    
+    <Link
+      href="/explore"
+      className="px-4 py-1.5 rounded-md bg-white text-black font-medium hover:opacity-90 transition"
+    >
+      Explore
+    </Link>
 
-          <Link
-            href="/metrics"
-            className="text-gray-400 hover:text-white transition"
-          >
-            Popular
-          </Link>
-        </div>
-      </div>
+    <Link
+      href="/metrics"
+      className="px-4 py-1.5 rounded-md border border-[#334155] text-gray-400 hover:text-white hover:bg-[#1e293b] transition"
+    >
+      Popular
+    </Link>
+
+    {/* 🔥 MADE BY BUTTON */}
+    <a
+      href="https://agsolutions.dev"
+      target="_blank"
+      className="px-4 py-1.5 rounded-md border border-blue-500/30 text-blue-400 hover:bg-blue-500/10 hover:text-blue-300 transition"
+    >
+      Made by AG Solutions
+    </a>
+
+  </div>
+</div>
 
       {/* LOGO */}
       <div className="flex justify-center mb-6">
