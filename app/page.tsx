@@ -23,6 +23,11 @@ export default function LandingPage() {
           instantly and copy clean code in seconds.
         </p>
 
+        {/* 🔥 Micro branding (sutil pero poderoso) */}
+        <p className="mt-4 text-sm text-gray-500">
+          Built by AG Solutions
+        </p>
+
         <div className="mt-10 flex justify-center gap-4 flex-wrap">
           <a
             href="/explore"
@@ -133,6 +138,42 @@ export default function LandingPage() {
               </button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/*  CREATOR SECTION (NUEVO) */}
+      <section className="max-w-6xl mx-auto px-6 pb-24">
+        <div className="bg-[#1e293b] border border-[#334155] rounded-xl p-6 flex flex-col md:flex-row items-center justify-between gap-6">
+          
+          <div className="text-center md:text-left">
+            <p className="text-sm text-gray-400">Built by</p>
+
+            <h3 className="text-lg font-semibold text-white mt-1">
+              Abraham · AG Solutions
+            </h3>
+
+            <p className="text-sm text-gray-400 mt-2 max-w-md">
+              I build high-conversion websites and SaaS products for clinics and businesses.
+            </p>
+          </div>
+
+          <div className="flex gap-3">
+            <a
+              href="https://agsolutions.dev"
+              target="_blank"
+              className="px-5 py-2 bg-white text-black rounded-lg text-sm font-medium hover:opacity-90 transition"
+            >
+              Visit Website
+            </a>
+
+            <a
+              href="/explore"
+              className="px-5 py-2 border border-[#334155] rounded-lg text-sm font-medium hover:bg-[#0f172a] transition"
+            >
+              Browse Snippets
+            </a>
+          </div>
+
         </div>
       </section>
 
